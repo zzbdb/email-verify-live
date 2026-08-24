@@ -1,0 +1,23 @@
+name: email-verify-live
+
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install dnspython
+      - name: Run verifier
+        env:
+          API_SECRET: ${{ secrets.API_SECRET }}
+          API_BASE: http://47.243.226.129:5002
+          VERIFY_LIMIT: '80'
+        run: python3 verifier.py
