@@ -44,7 +44,7 @@ def verify_smtp(email, timeout=8):
                 s.quit()
                 if code == 250:
                     # catchall 检测：随机地址探活
-                    rand = f"catchalltest{int(time.time())}@domain"
+                    rand = f"catchalltest{int(time.time())}@{domain}"
                     try:
                         s2 = smtplib.SMTP(timeout=timeout)
                         s2.connect(m, 25)
